@@ -1,0 +1,17 @@
+.movies_container{
+    background-color: rgba(0, 0, 0, .5)
+}
+.main-text{
+
+    color: #fff9f9;
+    text-transform: uppercase;
+    -webkit-text-stroke: 2px #7e8a8b;
+    text-decoration:  underline overline;
+    text-underline-offset: 10px;
+    text-decoration-thickness: 1px;
+   
+}
+.card-title{
+    color:#dbc8e2;
+    
+}

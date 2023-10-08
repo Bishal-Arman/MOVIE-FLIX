@@ -1,0 +1,28 @@
+.menubar-section {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 0; 
+  }
+  
+  .menubar-section li {
+    color: white;
+    line-height:.2;
+    font-weight:600;
+  }
+  
+  .menubar-section li:hover {
+    color: white;
+    
+  }
+.logo{
+    margin-top: -14px;
+    margin-bottom: -8px;
+}
+.active {
+    color: white;
+  }
+
+@media (max-width: 767px) {
+  .menu-icon svg {
+    stroke: white; 
+  }
+}
