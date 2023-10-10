@@ -1,12 +1,17 @@
+
 import { Outlet } from "react-router-dom";
 import Footer from "../pages/Shared/Footer/Footer";
 import NavBar from "../pages/Shared/NavBar/NavBar";
 
 const Main = () => {
   return (
-    <div>
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       <NavBar />
-      <Outlet />
+      <div style={{ flex: 1 }}>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

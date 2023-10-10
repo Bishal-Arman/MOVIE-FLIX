@@ -1,8 +1,24 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/images/logo.avif";
 import "./NavBar.css";
+import { Button, Drawer } from "antd";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
 
 const NavBar = () => {
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+  const { watchList } = useSelector((state: RootState) => state.watchList);
+  console.log(watchList);
+
   const NavOptions = (
     <>
       <li>
@@ -57,7 +73,7 @@ const NavBar = () => {
         <div className="logo">
           <img
             data-aos="zoom-out-"
-            className="w-[50px] rounded-full shadow-[5px_5px_0px_0px_rgba(109,40,217)]"
+            className="w-[50px] rounded-full shadow-[5px_5px_0px_0px_rgba(109,40,217)] hidden lg:block "
             src={logo}
             alt=""
           />
@@ -79,7 +95,29 @@ const NavBar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{NavOptions}</ul>
       </div>
-      <div className="navbar-end">{/* <a className="btn">Button</a> */}</div>
+      <div className="navbar-end text-yellow-400 text-xl me-10 hover:text-green-400">
+        <button onClick={showDrawer}>
+          {" "}
+          WatchList {watchList.length ? watchList.length : ""}
+        </button>
+
+        <Drawer
+          title="WATCHLIST DETAILS"
+          placement="right"
+          onClose={onClose}
+          open={open}
+        >
+          <Link to="/watchList">
+            <Button>My watchList</Button>
+          </Link>
+          <Link to="">
+            <Button>OK</Button>
+          </Link>
+          <Link to="">
+            <Button>NO</Button>
+          </Link>
+        </Drawer>
+      </div>
     </div>
   );
 };

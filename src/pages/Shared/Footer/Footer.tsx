@@ -1,9 +1,9 @@
 import logo from "../../../assets/images/logo.avif";
-import "./Footer.css";
+
 const Footer = () => {
   const getYear = new Date().getFullYear();
   return (
-    <footer className="footer footer-center p-5 bg-black text-primary-content  ">
+    <footer className="footer footer-center p-5 bg-black text-primary-content ">
       <aside>
         <img className="w-[70px] rounded-full " src={logo} alt="" />
 
