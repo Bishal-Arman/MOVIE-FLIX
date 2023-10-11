@@ -11,8 +11,7 @@ const MySwal = withReactContent(Swal);
 const showSweetAlert = () => {
   MySwal.fire({
     icon: "error",
-    text: "No movies exist in your watchList!",
-    footer: '<a  href="/">Click here & Add To WatchList</a>',
+    text: "No movies exist in your watchedList!",
     customClass: {
       footer: "custom-footer-text-color",
       popup: "sweet-alert-with-margin",
