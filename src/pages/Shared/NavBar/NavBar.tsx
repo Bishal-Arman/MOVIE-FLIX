@@ -5,6 +5,7 @@ import { Button, Drawer } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
+import { FaShoppingCart } from "react-icons/fa";
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
@@ -16,8 +17,9 @@ const NavBar = () => {
   const onClose = () => {
     setOpen(false);
   };
-  const { watchList } = useSelector((state: RootState) => state.watchList);
-  console.log(watchList);
+  const { watchList, watching, watched } = useSelector(
+    (state: RootState) => state.watchList
+  );
 
   const NavOptions = (
     <>
@@ -29,16 +31,6 @@ const NavBar = () => {
           }
         >
           Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/about"
-          className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "active" : ""
-          }
-        >
-          About
         </NavLink>
       </li>
     </>
@@ -96,9 +88,20 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{NavOptions}</ul>
       </div>
       <div className="navbar-end text-yellow-400 text-xl me-10 hover:text-green-400">
-        <button onClick={showDrawer}>
-          {" "}
-          WatchList {watchList.length ? watchList.length : ""}
+        <button
+          onClick={showDrawer}
+          className="flex justify-center items-center"
+        >
+          <span>WatchList</span>
+          <FaShoppingCart className="ms-1 text-red-500" />
+          <span className="me-6">
+            +
+            {watchList.length ? (
+              <span className="text-white">({watchList.length})</span>
+            ) : (
+              ""
+            )}
+          </span>
         </button>
 
         <Drawer
@@ -107,15 +110,32 @@ const NavBar = () => {
           onClose={onClose}
           open={open}
         >
+          <progress className="progress w-full mb-5"></progress>
           <Link to="/watchList">
-            <Button>My watchList</Button>
+            <Button className="w-full bg-slate-600 text-white font-serif text-xl  ">
+              My watchList
+              <span className="ms-2 font-semibold ">
+                {watchList.length ? <>({watchList.length})</> : <>(0)</>}
+              </span>
+            </Button>
           </Link>
-          <Link to="">
-            <Button>OK</Button>
+          <Link to="/watching">
+            <Button className="w-full my-7 bg-orange-950 text-green-500 font-serif text-xl">
+              My WatchingList
+              <span className="ms-2 font-semibold ">
+                {watching.length ? <>({watching.length})</> : <>(0)</>}
+              </span>
+            </Button>
           </Link>
-          <Link to="">
-            <Button>NO</Button>
+          <Link to="/watched">
+            <Button className=" w-full bg-violet-300 text-emerald-950 font-serif text-xl">
+              My WatchedList
+              <span className="ms-2 font-semibold ">
+                {watched.length ? <>({watched.length})</> : <>(0)</>}
+              </span>
+            </Button>
           </Link>
+          <progress className="progress w-full mt-5"></progress>
         </Drawer>
       </div>
     </div>

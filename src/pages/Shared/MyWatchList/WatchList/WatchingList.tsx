@@ -1,17 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
-import withReactContent from "sweetalert2-react-content";
-import "./WatchList.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import {
   AddToWatchedList,
-  AddToWatchingList,
-  RemoveFromWatchList,
+  RemoveFromWatchingList,
 } from "../../../../app/reducerSlice/watchListSlice";
 import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { Episode } from "../../../../graphql/__generated__/graphql";
-import { Link } from "react-router-dom";
 
 const MySwal = withReactContent(Swal);
 
@@ -27,60 +24,29 @@ const showSweetAlert = () => {
   });
 };
 
-const WatchList = () => {
-  const { watchList } = useSelector((state: RootState) => state.watchList);
+const WatchingList = () => {
+  const { watching } = useSelector((state: RootState) => state.watchList);
   const dispatch = useDispatch();
-
-  if (watchList.length === 0) {
+  const handleRemove = (movieId: string) => {
+    dispatch(RemoveFromWatchingList({ id: movieId }));
+    Swal.fire({
+      icon: "success",
+      title: "Delete Successfully From WatchingList",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+  if (watching.length === 0) {
     showSweetAlert();
     return (
       <>
         <h1 className="text-center font-semibold text-xl text-yellow-400 mt-40">
-          ~~~Your watclist is empty!!!Please go to home page & select content~~~
+          ~~~Your watchinglist is empty~~~
         </h1>
-        <Link to="/" className="flex justify-center items-center mt-8">
-          <button className="btn ">
-            Back To Home Page
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
-          </button>
-        </Link>
       </>
     );
   }
-
-  const removeFromWatchList = (movieId: string) => {
-    dispatch(RemoveFromWatchList({ id: movieId }));
-    Swal.fire({
-      icon: "success",
-      title: "Delete Successfully From WatchList",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
-  const handleAddToWatching = (movie: Episode) => {
-    dispatch(AddToWatchingList(movie));
-    Swal.fire({
-      icon: "success",
-      title: `${movie.name}has been added to your WatchingList.`,
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
-
-  const handleAddToWatched = (movie: Episode) => {
+  const handleWatched = (movie: Episode) => {
     dispatch(AddToWatchedList(movie));
     Swal.fire({
       icon: "success",
@@ -97,11 +63,11 @@ const WatchList = () => {
         data-aos-duration="1500"
         className="my-10 main-text text-center text-2xl font-semibold "
       >
-        MY WATCHlIST
+        MY WATCHINGlIST
       </h3>
       <div className="flex justify-center items-center">
         <div className="grid lg:grid-cols-3 md:grid-cols-1  sm:grid-cols-1 gap-10  ">
-          {watchList.map((movie) => (
+          {watching.map((movie) => (
             <div
               key={movie.id}
               className="card w-96 bg-base-100 shadow-xl image-full "
@@ -126,27 +92,17 @@ const WatchList = () => {
                 <div className="card-actions flex-row justify-center mt-10 ">
                   <div className="flex">
                     <button
-                      className="btn btn-outline btn-info rounded me-2 font-bold"
-                      onClick={() => handleAddToWatching(movie)}
-                    >
-                      Add To Watching
-                    </button>
-                    <button
-                      className="btn btn-outline btn-accent rounded ms-1 font-bold"
-                      onClick={() => handleAddToWatched(movie)}
+                      className="btn btn-outline btn-accent rounded me-1 font-bold"
+                      onClick={() => handleWatched(movie)}
                     >
                       Already Watched
                     </button>
-                  </div>
-                  <div className="mt-5 flex justify-center items-center">
-                    <div className="flex flex-row  justify-center">
-                      <button
-                        className="btn btn-secondary font-bold "
-                        onClick={() => removeFromWatchList(movie.id as string)}
-                      >
-                        Remove <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </div>
+                    <button
+                      className="btn btn-secondary font-bold ms-1 "
+                      onClick={() => handleRemove(movie.id as string)}
+                    >
+                      Remove <FontAwesomeIcon icon={faTrash} />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -158,4 +114,4 @@ const WatchList = () => {
   );
 };
 
-export default WatchList;
+export default WatchingList;

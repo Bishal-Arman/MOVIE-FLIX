@@ -6,7 +6,7 @@ import { router } from "./Routes/Routes";
 function App() {
   return (
     <HelmetProvider>
-      <div className="p">
+      <div>
         <RouterProvider router={router} />
       </div>
     </HelmetProvider>
