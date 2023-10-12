@@ -1,6 +1,6 @@
 # Movie~Flix
 
-- Project-Link
+- Project-Link (https://movieflixpro.netlify.app)
 - [Click here to see the live site](https://movieflixpro.netlify.app)
 
 
